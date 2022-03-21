@@ -1,0 +1,9 @@
+name: MoneySystem
+version: 1.0
+author: Tobi
+main: net.coalcube.moneysystem.MoneySystem
+commands:
+  money:
+    description: Zeigt dir dein Vermögen an bzw verwaltet dein vermögen.
+  pay:
+    description: Damit kannst du anderen Geld überweisen.
