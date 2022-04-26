@@ -1,5 +1,6 @@
 package net.coalcube.moneysystem.command;
 
+import net.coalcube.moneysystem.api.MoneyAPI;
 import net.coalcube.moneysystem.util.ConfigurationManager;
 import net.coalcube.moneysystem.util.MoneyManager;
 import net.coalcube.moneysystem.util.UUIDFetcher;

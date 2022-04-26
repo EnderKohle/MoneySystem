@@ -6,6 +6,7 @@ import net.coalcube.moneysystem.listener.JoinEvent;
 import net.coalcube.moneysystem.util.ConfigurationManager;
 import net.coalcube.moneysystem.util.MoneyManager;
 import net.coalcube.moneysystem.util.MySQL;
+import net.coalcube.moneysystem.util.UpdateChecker;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.command.ConsoleCommandSender;
@@ -33,6 +34,7 @@ public class MoneySystem extends JavaPlugin {
     public void onEnable() {
         instance = this;
         console = Bukkit.getConsoleSender();
+        UpdateChecker updateChecker = new UpdateChecker(101672);
         PluginManager pluginManager = Bukkit.getPluginManager();
 
         console.sendMessage("§e  __  __                                  ____                  _                      ");
@@ -80,6 +82,16 @@ public class MoneySystem extends JavaPlugin {
 
         console.sendMessage(messages.get("prefix") + "§7Das Plugin wurde §2erfolgreich gestartet§7.");
 
+        try {
+            if (updateChecker.checkForUpdates()) {
+                console.sendMessage(String.valueOf(new TextComponent(messages.get("prefix") + "§cEin neues Update ist verfügbar.")));
+                console.sendMessage(String.valueOf(new TextComponent(messages.get("prefix") + "§7Lade es dir unter " +
+                        "§ehttps://www.spigotmc.org/resources/bansystem-mit-ids.65863/ §7runter um aktuell zu bleiben.")));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         super.onEnable();
     }
 
@@ -99,7 +111,7 @@ public class MoneySystem extends JavaPlugin {
         getCommand("money").setExecutor(new CMDmoney(moneyManager, configurationManager));
         getCommand("pay").setExecutor(new CMDpay(moneyManager, configurationManager));
 
-        pluginManager.registerEvents(new JoinEvent(moneyManager, config), this);
+        pluginManager.registerEvents(new JoinEvent(moneyManager, config, configurationManager), this);
     }
 
     private void createConfigurations() throws IOException {
@@ -146,4 +158,5 @@ public class MoneySystem extends JavaPlugin {
     public static Plugin getInstance() {
         return instance;
     }
+
 }
